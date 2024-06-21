@@ -9,6 +9,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 void main() {
   runApp(MyApp());
 }
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -37,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -115,7 +117,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String _receivedMessage = '';
   Timer? _timer;
   TextEditingController _textController = TextEditingController();
-  TextEditingController _topicController = TextEditingController(text: 'TESTE_2024'); // Valor padrão
+  TextEditingController _topicController =
+      TextEditingController(text: 'TESTE_2024'); // Valor padrão
   List<String> _suggestions = ['TESTE_2024', 'teste 1', 'teste 2'];
 
   @override
@@ -161,13 +164,15 @@ class _MyHomePageState extends State<MyHomePage> {
       });
       _startSendingMessages();
     } else {
-      print('ERROR: MQTT client connection failed - disconnecting, state is ${client!.connectionStatus!.state}');
+      print(
+          'ERROR: MQTT client connection failed - disconnecting, state is ${client!.connectionStatus!.state}');
       client!.disconnect();
     }
 
     client!.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
       final MqttPublishMessage recMess = c[0].payload as MqttPublishMessage;
-      final String pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      final String pt =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
       print('Received message: $pt from topic: ${c[0].topic}>');
       setState(() {
@@ -386,7 +391,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
 class IPPage extends StatefulWidget {
   @override
   _IPPageState createState() => _IPPageState();
@@ -398,18 +402,19 @@ class _IPPageState extends State<IPPage> {
   Socket? _socket;
   TextEditingController _messageController = TextEditingController();
   String _receivedMessage = '';
+  Timer? _sendingSATimer; // Timer para enviar 'SA' a cada segundo
 
   @override
   void initState() {
     super.initState();
     _startScanLoop();
-    _startSendingSA(); // Inicia o envio da mensagem 'SA'
   }
 
   @override
   void dispose() {
     _scanTimer?.cancel();
     _socket?.close();
+    _sendingSATimer?.cancel(); // Cancela o timer de envio de 'SA'
     super.dispose();
   }
 
@@ -429,7 +434,8 @@ class _IPPageState extends State<IPPage> {
       final String broadcastAddress = '255.255.255.255';
       final int port = 5555;
 
-      udpSocket.send(utf8.encode('<SI>'), InternetAddress(broadcastAddress), port);
+      udpSocket.send(
+          utf8.encode('<SI>'), InternetAddress(broadcastAddress), port);
 
       await Future.delayed(Duration(seconds: 1));
 
@@ -475,7 +481,7 @@ class _IPPageState extends State<IPPage> {
     try {
       _socket = await Socket.connect(ip, 8080);
       _socket!.listen(
-            (data) {
+        (data) {
           setState(() {
             _receivedMessage = utf8.decode(data);
           });
@@ -490,9 +496,17 @@ class _IPPageState extends State<IPPage> {
         },
       );
       print('Connected to: $ip');
+      _startSendingSA(); // Inicia o envio da mensagem 'SA'
     } catch (e) {
       print('Error connecting to server: $e');
     }
+  }
+
+  // Função para enviar a mensagem 'SA' a cada 1 segundo
+  void _startSendingSA() {
+    _sendingSATimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _sendMessage('SA');
+    });
   }
 
   Future<void> _sendMessage(String message) async {
@@ -503,13 +517,6 @@ class _IPPageState extends State<IPPage> {
     } else {
       print('Socket is not connected');
     }
-  }
-
-  // Função para enviar a mensagem 'SA' a cada 1 segundo
-  void _startSendingSA() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      _sendMessage('SA');
-    });
   }
 
   @override
@@ -598,8 +605,15 @@ class _IPPageState extends State<IPPage> {
   }
 }
 
-class CenasPage extends StatelessWidget {
+class CenasPage extends StatefulWidget {
+  @override
+  _CenasPageState createState() => _CenasPageState();
+}
+
+class _CenasPageState extends State<CenasPage> {
   final TextEditingController _cenaController = TextEditingController();
+  List<bool> _checkBoxValuesGreen = List.generate(8, (index) => false);
+  List<bool> _checkBoxValuesRed = List.generate(8, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -619,22 +633,106 @@ class CenasPage extends StatelessWidget {
                     controller: _cenaController,
                     decoration: InputDecoration(
                       labelText: 'Cena',
-                      hintText: 'Digite a cena aqui',
                     ),
                   ),
                 ),
                 IconButton(
                   icon: Icon(Icons.content_copy),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: _cenaController.text));
+                    Clipboard.setData(
+                        ClipboardData(text: _cenaController.text));
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Cena copiada para a área de transferência')),
+                      SnackBar(
+                          content: Text(
+                              'Cena copiada para a área de transferência')),
                     );
                   },
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(
+                height:
+                    10), // Espaçamento entre o TextField e o texto "Placa 1"
+            Text(
+              'Placa 1',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+                height:
+                    10), // Espaçamento entre o texto "Placa 1" e as ChoiceChips
+            Column(
+              children: List.generate(8, (index) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _checkBoxValuesGreen[index] =
+                                !_checkBoxValuesGreen[index];
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(4),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: _checkBoxValuesGreen[index]
+                                ? Colors.green
+                                : Colors.grey[200],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'C${index + 1}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: _checkBoxValuesGreen[index]
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10), // Espaçamento entre as colunas
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _checkBoxValuesRed[index] =
+                                !_checkBoxValuesRed[index];
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(2),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: _checkBoxValuesRed[index]
+                                ? Colors.red
+                                : Colors.grey[200],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'C${index + 1}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: _checkBoxValuesRed[index]
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+            ),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
