@@ -1938,7 +1938,7 @@ class _CenasPageState extends State<CenasPage> {
           parts.add('CN');
           addedCN = true; // Marca que 'CN' foi adicionado
         }
-        parts.add('OFONC${i + 1}${plateNumber}');
+        parts.add('ONC${i + 1}${plateNumber}');
       }
     }
     for (int i = 0; i < redFlags.length; i++) {
@@ -1949,7 +1949,7 @@ class _CenasPageState extends State<CenasPage> {
           parts.add('CN');
           addedCN = true; // Marca que 'CN' foi adicionado
         }
-        parts.add('OFFFC${i + 1}${plateNumber}');
+        parts.add('FFC${i + 1}${plateNumber}');
       }
     }
   }
