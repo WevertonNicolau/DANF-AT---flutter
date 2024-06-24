@@ -721,6 +721,38 @@ class _On_offpagestate extends State<On_offpage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ToggleButtons(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text('ON'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text('OFF'),
+                      ),
+                    ],
+                    isSelected: _toggleSelection,
+                    onPressed: (int index) {
+                      setState(() {
+                        for (int buttonIndex = 0;
+                            buttonIndex < _toggleSelection.length;
+                            buttonIndex++) {
+                          if (buttonIndex == index) {
+                            _toggleSelection[buttonIndex] = true;
+                          } else {
+                            _toggleSelection[buttonIndex] = false;
+                          }
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
                 children: [
                   Expanded(
                     child: TextField(
@@ -745,7 +777,7 @@ class _On_offpagestate extends State<On_offpage> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -753,8 +785,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 1',
                             style: TextStyle(
@@ -792,8 +823,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 2',
                             style: TextStyle(
@@ -831,8 +861,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 3',
                             style: TextStyle(
@@ -874,8 +903,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 4',
                             style: TextStyle(
@@ -913,8 +941,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 5',
                             style: TextStyle(
@@ -952,8 +979,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 6',
                             style: TextStyle(
@@ -995,8 +1021,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 7',
                             style: TextStyle(
@@ -1034,8 +1059,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 8',
                             style: TextStyle(
@@ -1073,8 +1097,7 @@ class _On_offpagestate extends State<On_offpage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
                             'Placa 9',
                             style: TextStyle(
@@ -1108,7 +1131,7 @@ class _On_offpagestate extends State<On_offpage> {
                   ),
                 ],
               ),
-              // Adicione aqui as outras placas conforme necessário...
+// Adicione aqui as outras placas conforme necessário...
             ],
           ),
         ),
@@ -1125,9 +1148,8 @@ class _On_offpagestate extends State<On_offpage> {
 
   void _gerarCena() {
     List<String> cenaParts = [];
-
     String onOff = _toggleSelection[0] ? "ON" : "OFF";
-    // Verificando as caixinhas marcadas
+// Verificando as caixinhas marcadas
     _addCheckedPlates(
         cenaParts, _checkBoxValuesGreen1, _checkBoxValuesRed1, '1', onOff);
     _addCheckedPlates(
@@ -1147,15 +1169,15 @@ class _On_offpagestate extends State<On_offpage> {
     _addCheckedPlates(
         cenaParts, _checkBoxValuesGreen9, _checkBoxValuesRed9, '9', onOff);
 
-    // Construindo a string da cena
+// Construindo a string da cena
     String cenaString = cenaParts.join();
 
-    // Atualizando o campo de texto com a cena gerada
+// Atualizando o campo de texto com a cena gerada
     setState(() {
       _cenaController.text = cenaString;
     });
 
-    // Exibindo mensagem de cena gerada
+// Exibindo mensagem de cena gerada
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Comando gerado')),
     );
@@ -1164,25 +1186,46 @@ class _On_offpagestate extends State<On_offpage> {
   void _addCheckedPlates(List<String> parts, List<bool> greenFlags,
       List<bool> redFlags, String prefix, String onOff) {
     bool addedCN = false; // Flag para controlar se 'CN' já foi adicionado
-
-    for (int i = 0; i < greenFlags.length; i++) {
-      if (greenFlags[i]) {
-        String plateNumber =
-            (prefix).padLeft(2, '0'); // Adiciona zero à esquerda se necessário
-        if (!addedCN) {
-          addedCN = true; // Marca que 'CN' foi adicionado
+    if (onOff == 'OFF') {
+      for (int i = 0; i < greenFlags.length; i++) {
+        if (greenFlags[i]) {
+          String plateNumber = (prefix)
+              .padLeft(2, '0'); // Adiciona zero à esquerda se necessário
+          if (!addedCN) {
+            addedCN = true; // Marca que 'CN' foi adicionado
+          }
+          parts.add('NCFFC${i + 1}S${plateNumber}');
         }
-        parts.add('${onOff}NCONC${i + 1}S${plateNumber}');
+
+        if (redFlags[i]) {
+          String plateNumber = (prefix)
+              .padLeft(2, '0'); // Adiciona zero à esquerda se necessário
+          if (!addedCN) {
+            addedCN = true; // Marca que 'CN' foi adicionado
+          }
+          parts.add('NCFFC${i + 1}N${plateNumber}');
+        }
       }
     }
-    for (int i = 0; i < redFlags.length; i++) {
-      if (redFlags[i]) {
-        String plateNumber =
-            (prefix).padLeft(2, '0'); // Adiciona zero à esquerda se necessário
-        if (!addedCN) {
-          addedCN = true; // Marca que 'CN' foi adicionado
+    if (onOff == 'ON') {
+      for (int i = 0; i < greenFlags.length; i++) {
+        if (greenFlags[i]) {
+          String plateNumber = (prefix)
+              .padLeft(2, '0'); // Adiciona zero à esquerda se necessário
+          if (!addedCN) {
+            addedCN = true; // Marca que 'CN' foi adicionado
+          }
+          parts.add('NCONC${i + 1}S${plateNumber}');
         }
-        parts.add('${onOff}NCONC${i + 1}N${plateNumber}');
+
+        if (redFlags[i]) {
+          String plateNumber = (prefix)
+              .padLeft(2, '0'); // Adiciona zero à esquerda se necessário
+          if (!addedCN) {
+            addedCN = true; // Marca que 'CN' foi adicionado
+          }
+          parts.add('NCONC${i + 1}N${plateNumber}');
+        }
       }
     }
   }
@@ -1190,29 +1233,14 @@ class _On_offpagestate extends State<On_offpage> {
 
 class TimerPage extends StatefulWidget {
   @override
-  _TimerPagestate createState() => _TimerPagestate();
+  _TimerPageState createState() => _TimerPageState();
 }
 
-class _TimerPagestate extends State<TimerPage> {
+class _TimerPageState extends State<TimerPage> {
   final TextEditingController _cenaController = TextEditingController();
-  List<bool> _checkBoxValuesGreen1 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed1 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen2 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed2 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen3 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed3 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen4 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed4 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen5 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed5 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen6 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed6 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen7 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed7 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen8 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed8 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesGreen9 = List.generate(8, (index) => false);
-  List<bool> _checkBoxValuesRed9 = List.generate(8, (index) => false);
+  final TextEditingController _tempoController = TextEditingController();
+  List<List<bool>> _checkBoxValues =
+      List.generate(9, (index) => List.generate(8, (index) => false));
 
   @override
   Widget build(BuildContext context) {
@@ -1229,7 +1257,7 @@ class _TimerPagestate extends State<TimerPage> {
                     child: TextField(
                       controller: _cenaController,
                       decoration: InputDecoration(
-                        labelText: 'Cena',
+                        labelText: 'Comando',
                       ),
                     ),
                   ),
@@ -1249,369 +1277,50 @@ class _TimerPagestate extends State<TimerPage> {
                 ],
               ),
               SizedBox(height: 10),
-              Row(
+              TextField(
+                controller: _tempoController,
+                decoration: InputDecoration(
+                  labelText: 'Tempo em minutos',
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+              ),
+              SizedBox(height: 10),
+              Column(
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 1',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen1[index],
-                              isCheckedRed: _checkBoxValuesRed1[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen1[index] =
-                                      !_checkBoxValuesGreen1[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed1[index] =
-                                      !_checkBoxValuesRed1[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      Expanded(child: buildPlateColumn(0)),
+                      SizedBox(width: 16),
+                      Expanded(child: buildPlateColumn(1)),
+                      SizedBox(width: 16),
+                      Expanded(child: buildPlateColumn(2)),
+                    ],
                   ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 2',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen2[index],
-                              isCheckedRed: _checkBoxValuesRed2[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen2[index] =
-                                      !_checkBoxValuesGreen2[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed2[index] =
-                                      !_checkBoxValuesRed2[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: buildPlateColumn(3)),
+                      SizedBox(width: 16),
+                      Expanded(child: buildPlateColumn(4)),
+                      SizedBox(width: 16),
+                      Expanded(child: buildPlateColumn(5)),
+                    ],
                   ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 3',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen3[index],
-                              isCheckedRed: _checkBoxValuesRed3[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen3[index] =
-                                      !_checkBoxValuesGreen3[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed3[index] =
-                                      !_checkBoxValuesRed3[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: buildPlateColumn(6)),
+                      SizedBox(width: 16),
+                      Expanded(child: buildPlateColumn(7)),
+                      SizedBox(width: 16),
+                      Expanded(child: buildPlateColumn(8)),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 4',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen4[index],
-                              isCheckedRed: _checkBoxValuesRed4[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen4[index] =
-                                      !_checkBoxValuesGreen4[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed4[index] =
-                                      !_checkBoxValuesRed4[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 5',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen5[index],
-                              isCheckedRed: _checkBoxValuesRed5[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen5[index] =
-                                      !_checkBoxValuesGreen5[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed5[index] =
-                                      !_checkBoxValuesRed5[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 6',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen6[index],
-                              isCheckedRed: _checkBoxValuesRed6[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen6[index] =
-                                      !_checkBoxValuesGreen6[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed6[index] =
-                                      !_checkBoxValuesRed6[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 7',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen7[index],
-                              isCheckedRed: _checkBoxValuesRed7[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen7[index] =
-                                      !_checkBoxValuesGreen7[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed7[index] =
-                                      !_checkBoxValuesRed7[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 8',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen8[index],
-                              isCheckedRed: _checkBoxValuesRed8[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen8[index] =
-                                      !_checkBoxValuesGreen8[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed8[index] =
-                                      !_checkBoxValuesRed8[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0), // Adicionando padding à esquerda
-                          child: Text(
-                            'Placa 9',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Column(
-                          children: List.generate(8, (index) {
-                            return PlateWidget(
-                              index: index + 1,
-                              isCheckedGreen: _checkBoxValuesGreen9[index],
-                              isCheckedRed: _checkBoxValuesRed9[index],
-                              onGreenTap: () {
-                                setState(() {
-                                  _checkBoxValuesGreen9[index] =
-                                      !_checkBoxValuesGreen9[index];
-                                });
-                              },
-                              onRedTap: () {
-                                setState(() {
-                                  _checkBoxValuesRed9[index] =
-                                      !_checkBoxValuesRed9[index];
-                                });
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
             ],
           ),
         ),
@@ -1626,31 +1335,52 @@ class _TimerPagestate extends State<TimerPage> {
     );
   }
 
+  Widget buildPlateColumn(int plateIndex) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Placa ${plateIndex + 1}',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: 5),
+        Column(
+          children: List.generate(8, (index) {
+            return PlateWidget1(
+              index: index + 1,
+              isChecked: _checkBoxValues[plateIndex][index],
+              onTap: () {
+                setState(() {
+                  _checkBoxValues[plateIndex][index] =
+                      !_checkBoxValues[plateIndex][index];
+                });
+              },
+            );
+          }),
+        ),
+      ],
+    );
+  }
+
   void _gerarCena() {
     List<String> cenaParts = [];
 
     // Verificando as caixinhas marcadas
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen1, _checkBoxValuesRed1, '1');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen2, _checkBoxValuesRed2, '2');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen3, _checkBoxValuesRed3, '3');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen4, _checkBoxValuesRed4, '4');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen5, _checkBoxValuesRed5, '5');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen6, _checkBoxValuesRed6, '6');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen7, _checkBoxValuesRed7, '7');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen8, _checkBoxValuesRed8, '8');
-    _addCheckedPlates(
-        cenaParts, _checkBoxValuesGreen9, _checkBoxValuesRed9, '9');
+    for (int i = 0; i < _checkBoxValues.length; i++) {
+      _addCheckedPlates(cenaParts, _checkBoxValues[i], '${i + 1}');
+    }
 
     // Construindo a string da cena
     String cenaString = cenaParts.join();
+
+    // Adicionando o tempo em minutos no lugar dos zeros com 3 caracteres
+    String tempoString = _tempoController.text.padLeft(3, '0');
+    if (tempoString.isNotEmpty) {
+      cenaString = cenaString.replaceAll('000', tempoString);
+    }
 
     // Atualizando o campo de texto com a cena gerada
     setState(() {
@@ -1663,27 +1393,61 @@ class _TimerPagestate extends State<TimerPage> {
     );
   }
 
-  void _addCheckedPlates(List<String> parts, List<bool> greenFlags,
-      List<bool> redFlags, String prefix) {
-    bool addedCN = false; // Flag para controlar se 'CN' já foi adicionado
-
-    for (int i = 0; i < greenFlags.length; i++) {
-      if (greenFlags[i]) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Use apenas os botões vermelhos')),
-        );
-      }
-    }
-    for (int i = 0; i < redFlags.length; i++) {
-      if (redFlags[i]) {
+  void _addCheckedPlates(List<String> parts, List<bool> flags, String prefix) {
+    for (int i = 0; i < flags.length; i++) {
+      if (flags[i]) {
         String plateNumber =
             (prefix).padLeft(2, '0'); // Adiciona zero à esquerda se necessário
-        if (!addedCN) {
-          addedCN = true; // Marca que 'CN' foi adicionado
-        }
         parts.add('TCC${i + 1}000${plateNumber}');
       }
     }
+  }
+}
+
+class PlateWidget1 extends StatelessWidget {
+  final int index;
+  final bool isChecked;
+  final VoidCallback onTap;
+
+  const PlateWidget1({
+    Key? key,
+    required this.index,
+    required this.isChecked,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Align(
+        alignment: Alignment.center,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(4),
+          child: Container(
+            margin: EdgeInsets.all(2),
+            width: 40,
+            height: 30,
+            decoration: BoxDecoration(
+              color: isChecked ? Colors.yellow : Colors.grey[300],
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Center(
+              child: isChecked
+                  ? Icon(Icons.check, color: Colors.black)
+                  : Text(
+                      'C$index',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                      ),
+                    ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
