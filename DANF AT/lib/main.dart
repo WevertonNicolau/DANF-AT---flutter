@@ -1917,7 +1917,7 @@ class _CenasPageState extends State<CenasPage> {
 
     // Atualizando o campo de texto com a cena gerada
     setState(() {
-      _cenaController.text = cenaString;
+      _cenaController.text = 'CN$cenaString';
     });
 
     // Exibindo mensagem de cena gerada
@@ -1935,7 +1935,6 @@ class _CenasPageState extends State<CenasPage> {
         String plateNumber =
             (prefix).padLeft(2, '0'); // Adiciona zero à esquerda se necessário
         if (!addedCN) {
-          parts.add('CN');
           addedCN = true; // Marca que 'CN' foi adicionado
         }
         parts.add('ONC${i + 1}${plateNumber}');
@@ -1946,7 +1945,6 @@ class _CenasPageState extends State<CenasPage> {
         String plateNumber =
             (prefix).padLeft(2, '0'); // Adiciona zero à esquerda se necessário
         if (!addedCN) {
-          parts.add('CN');
           addedCN = true; // Marca que 'CN' foi adicionado
         }
         parts.add('FFC${i + 1}${plateNumber}');
