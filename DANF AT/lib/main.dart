@@ -162,8 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    final topicProvider = Provider.of<TopicProvider>(context, listen: false);
-    _topicController = TextEditingController(text: topicProvider.topic);
+
     // Não inicia a conexão MQTT aqui
   }
 
@@ -297,92 +296,104 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('CONEXÃO REMOTA'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            _buildConnectionStatus(),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildTopicInput(),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    insertTopic();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      labelText: 'Messagen',
-                    ),
-                    onSubmitted: (text) {
-                      if (_connected) {
-                        _publish(text);
-                      }
-                    },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _buildConnectionStatus(),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildTopicInput(),
                   ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_connected) {
-                      _publish(_textController.text);
-                    }
-                  },
-                  child: Text('Enviar'),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      insertTopic();
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        labelText: 'Mensagem',
+                      ),
+                      onSubmitted: (text) {
+                        if (_connected) {
+                          _publish(text);
+                        }
+                      },
                     ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
                     onPressed: () {
                       if (_connected) {
-                        _publish('OFAN');
+                        _publish(_textController.text);
                       }
                     },
-                    child: Text('ON'),
+                    child: Text('Enviar'),
                   ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {
+                        if (_connected) {
+                          _publish('OFAN');
+                        }
+                      },
+                      child: Text('ON'),
                     ),
-                    onPressed: () {
-                      if (_connected) {
-                        _publish('OFAO');
-                      }
-                    },
-                    child: Text('OFF'),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      onPressed: () {
+                        if (_connected) {
+                          _publish('OFAO');
+                        }
+                      },
+                      child: Text('OFF'),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 250, // Altura fixa para a caixa de feedback
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                padding: EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Text(
+                    'Received: $_receivedMessage',
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Received: $_receivedMessage',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -515,7 +526,10 @@ class _IPPageState extends State<IPPage> {
       String ip = match.group(2)!;
       String mac = match.group(3)!;
       String version = match.group(4)!;
-      return [name, ip, mac, version];
+
+      String topico = name.replaceAll('DSCV3', '');
+
+      return [topico, ip, mac, version];
     } else {
       print("A mensagem não está no formato esperado.");
       return [];
@@ -564,6 +578,34 @@ class _IPPageState extends State<IPPage> {
     }
   }
 
+  // Função para capturar o tópico
+  Future<void> captureTopic() async {
+    if (_socket != null) {
+      _sendMessage('SI'); // Envia o comando "SI"
+      await Future.delayed(Duration(
+          milliseconds: 50)); // Aguarda um segundo para receber a resposta
+
+      // Suponha que a mensagem recebida está armazenada em _receivedMessage
+      List<String> info = extractInfo(_receivedMessage);
+      if (info.isNotEmpty) {
+        String topico = info[0];
+        Clipboard.setData(ClipboardData(
+            text: topico)); // Copia o tópico para a área de transferência
+        print('Tópico capturado e copiado: $topico');
+        Clipboard.setData(ClipboardData(text: ''));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Tópico copiado: $topico'),
+          ),
+        );
+      } else {
+        print('Falha ao capturar o tópico');
+      }
+    } else {
+      print('Socket não está conectado');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -575,9 +617,19 @@ class _IPPageState extends State<IPPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text(
-              'IP: ${_scanResult.isNotEmpty ? _scanResult : 'Buscando a central...'}',
-              style: TextStyle(fontSize: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'IP: ${_scanResult.isNotEmpty ? _scanResult : 'Buscando a central...'}',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: captureTopic,
+                  child: Text('Capturar Tópico'),
+                ),
+              ],
             ),
             SizedBox(height: 10),
             Row(
@@ -1928,15 +1980,10 @@ class _CenasPageState extends State<CenasPage> {
 
   void _addCheckedPlates(List<String> parts, List<bool> greenFlags,
       List<bool> redFlags, String prefix) {
-    bool addedCN = false; // Flag para controlar se 'CN' já foi adicionado
-
     for (int i = 0; i < greenFlags.length; i++) {
       if (greenFlags[i]) {
         String plateNumber =
             (prefix).padLeft(2, '0'); // Adiciona zero à esquerda se necessário
-        if (!addedCN) {
-          addedCN = true; // Marca que 'CN' foi adicionado
-        }
         parts.add('ONC${i + 1}${plateNumber}');
       }
     }
@@ -1944,9 +1991,6 @@ class _CenasPageState extends State<CenasPage> {
       if (redFlags[i]) {
         String plateNumber =
             (prefix).padLeft(2, '0'); // Adiciona zero à esquerda se necessário
-        if (!addedCN) {
-          addedCN = true; // Marca que 'CN' foi adicionado
-        }
         parts.add('FFC${i + 1}${plateNumber}');
       }
     }
