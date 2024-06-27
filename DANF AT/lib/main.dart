@@ -21,7 +21,7 @@ class TopicProvider with ChangeNotifier {
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => TopicProvider(),
+      create: (context) => TopicProvider(),
       child: MyApp(),
     ),
   );
@@ -162,8 +162,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
-    // Não inicia a conexão MQTT aqui
+    final topicProvider = Provider.of<TopicProvider>(context, listen: false);
+    _topicController.text = topicProvider.topic;
   }
 
   @override
@@ -378,18 +378,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               SizedBox(height: 20),
-              Container(
-                height: 250, // Altura fixa para a caixa de feedback
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                padding: EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Text(
-                    'Received: $_receivedMessage',
-                    style: TextStyle(fontSize: 16),
-                  ),
+              SingleChildScrollView(
+                child: Text(
+                  'Feedback: $_receivedMessage',
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
             ],
