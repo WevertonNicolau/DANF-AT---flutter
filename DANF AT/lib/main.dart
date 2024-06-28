@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'CONEXÃO REMOTA',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
       ),
       home: SplashScreen(), // Inicia com a SplashScreen
     );
@@ -275,6 +275,13 @@ class _MyHomePageState extends State<MyHomePage> {
     client!.publishMessage(publishTopic, MqttQos.atLeastOnce, builder.payload!);
   }
 
+  void enviarMensagem(int index, int placa, bool ligado) {
+    String mensagemPrefixo = ligado ? 'OFON' : 'OFFF';
+    String mensagen_final = '${mensagemPrefixo}C${index + 1}0${placa}';
+    print(mensagen_final);
+    _publish(mensagen_final);
+  }
+
   Widget _buildConnectionStatus() {
     return Row(
       children: [
@@ -377,11 +384,478 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 1',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 1, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 1, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 2',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 2, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 2, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 3',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 3, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 3, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 20),
-              SingleChildScrollView(
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 4',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 4, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 4, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 5',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 5, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 5, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 6',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 6, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 6, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 7',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 7, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 7, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 8',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 8, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 8, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Placa 9',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          children: List.generate(8, (index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 129, 206, 131)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 9, true);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 106, 95)),
+                                    onPressed: () {
+                                      enviarMensagem(index, 9, false);
+                                    },
+                                    child: Text('${index + 1}'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: 100,
+                height: 400,
+                alignment: Alignment.topLeft,
+                decoration: BoxDecoration(),
                 child: Text(
                   'Feedback: $_receivedMessage',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.left,
                 ),
               ),
             ],
@@ -392,49 +866,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildTopicInput() {
-    return Stack(
-      children: [
-        TextField(
-          controller: _topicController,
-          decoration: InputDecoration(
-            labelText: 'Tópico',
-          ),
-          onChanged: (value) {
-            setState(() {});
+    return TextFormField(
+      controller: _topicController,
+      decoration: InputDecoration(
+        labelText: 'Tópico',
+        suffixIcon: PopupMenuButton<String>(
+          icon: const Icon(Icons.arrow_drop_down),
+          onSelected: (String value) {
+            _topicController.text = value;
+          },
+          itemBuilder: (BuildContext context) {
+            return _suggestions.map<PopupMenuItem<String>>((String value) {
+              return PopupMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList();
           },
         ),
-        Positioned(
-          right: 0,
-          top: 8,
-          child: IconButton(
-            icon: Icon(Icons.arrow_drop_down),
-            onPressed: () {
-              _showSuggestions();
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _showSuggestions() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return ListView(
-          children: _suggestions.map((suggestion) {
-            return ListTile(
-              title: Text(suggestion),
-              onTap: () {
-                setState(() {
-                  _topicController.text = suggestion;
-                });
-                Navigator.pop(context);
-              },
-            );
-          }).toList(),
-        );
-      },
+      ),
     );
   }
 }
@@ -451,6 +901,7 @@ class _IPPageState extends State<IPPage> {
   TextEditingController _messageController = TextEditingController();
   String _receivedMessage = '';
   Timer? _sendingSATimer; // Timer para enviar 'SA' a cada segundo
+  String _savedTopic = ''; // Variável para armazenar o tópico salvo
 
   @override
   void initState() {
@@ -494,6 +945,9 @@ class _IPPageState extends State<IPPage> {
           List<String> info = extractInfo(response);
           setState(() {
             _scanResult = info[1]; // IP address
+            if (info.isNotEmpty) {
+              _savedTopic = info[0]; // Salva o tópico encontrado
+            }
           });
           if (_scanResult.isNotEmpty) {
             _scanTimer?.cancel();
@@ -539,10 +993,16 @@ class _IPPageState extends State<IPPage> {
         },
         onError: (error) {
           print('Socket error: $error');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erro na conexão ⚠️')),
+          );
           _socket?.destroy();
         },
         onDone: () {
           print('Server closed connection');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erro na conexão ⚠️')),
+          );
           _socket?.destroy();
         },
       );
@@ -570,32 +1030,31 @@ class _IPPageState extends State<IPPage> {
     }
   }
 
-  // Função para capturar o tópico
+  // Função para copiar o tópico salvo
   Future<void> captureTopic() async {
-    if (_socket != null) {
-      _sendMessage('SI'); // Envia o comando "SI"
-      await Future.delayed(Duration(
-          milliseconds: 50)); // Aguarda um segundo para receber a resposta
-
-      // Suponha que a mensagem recebida está armazenada em _receivedMessage
-      List<String> info = extractInfo(_receivedMessage);
-      if (info.isNotEmpty) {
-        String topico = info[0];
-        Clipboard.setData(ClipboardData(
-            text: topico)); // Copia o tópico para a área de transferência
-        print('Tópico capturado e copiado: $topico');
-        Clipboard.setData(ClipboardData(text: ''));
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Tópico copiado: $topico'),
-          ),
-        );
-      } else {
-        print('Falha ao capturar o tópico');
-      }
+    if (_savedTopic.isNotEmpty) {
+      Clipboard.setData(ClipboardData(
+          text: _savedTopic)); // Copia o tópico para a área de transferência
+      print('Tópico copiado: $_savedTopic');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Tópico copiado: $_savedTopic'),
+        ),
+      );
     } else {
-      print('Socket não está conectado');
+      print('Nenhum tópico salvo para copiar');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Nenhum tópico salvo para copiar'),
+        ),
+      );
     }
+  }
+
+  void enviarMensagem(int index, int placa, bool ligado) {
+    String mensagemPrefixo = ligado ? 'OFON' : 'OFFF';
+    String mensagen_final = '${mensagemPrefixo}C${index + 1}0${placa}';
+    _sendMessage(mensagen_final);
   }
 
   @override
@@ -604,7 +1063,7 @@ class _IPPageState extends State<IPPage> {
       appBar: AppBar(
         title: Text('CONEXÃO VIA IP'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -682,10 +1141,479 @@ class _IPPageState extends State<IPPage> {
                 ),
               ],
             ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 1',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 1, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 1, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 2',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 2, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 2, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 3',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 3, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 3, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             SizedBox(height: 20),
-            Text(
-              'Received: $_receivedMessage',
-              style: TextStyle(fontSize: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 4',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 4, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 4, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 5',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 5, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 5, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 6',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 6, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 6, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 7',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 7, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 7, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 8',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 8, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 8, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Placa 9',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Column(
+                        children: List.generate(8, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 129, 206, 131)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 9, true);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 255, 106, 95)),
+                                  onPressed: () {
+                                    enviarMensagem(index, 9, false);
+                                  },
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Container(
+              width: 100,
+              height: 400,
+              alignment: Alignment.topLeft,
+              decoration: BoxDecoration(),
+              child: Text(
+                'Feedback: $_receivedMessage',
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.left,
+              ),
             ),
           ],
         ),
